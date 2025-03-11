@@ -35,6 +35,9 @@ class ProductivityApp:
         # Add a keyboard shortcut for testing (Alt+P)
         self.root.bind_all("<Alt-p>", lambda e: self.direct_show_popup())
         
+        # Add a keyboard shortcut for quitting (Alt+Q)
+        self.root.bind_all("<Alt-q>", lambda e: self.on_quit())
+        
         # Set protocol for root window closing
         self.root.protocol("WM_DELETE_WINDOW", self.on_quit)
         
@@ -45,42 +48,24 @@ class ProductivityApp:
         """Directly show the popup without going through the queue"""
         print("direct_show_popup called")  # Debug print
         
-        # If window doesn't exist or was destroyed, create a new one
-        if self.window is None or not self.window.winfo_exists():
-            print("Window doesn't exist, creating new one")
-            self.create_popup()
-            return
+        # Always create a new popup with fresh timestamp
+        if self.window is not None and self.window.winfo_exists():
+            # If window is minimized or visible, destroy it to create a new one
+            print("Destroying existing window to create a new one")
+            self.window.destroy()
+            self.window = None
             
-        # If window exists but is hidden, show it
-        try:
-            print("Window exists, bringing to front")
-            # Make sure window isn't iconified (minimized)
-            if self.window.state() == 'iconic':
-                self.window.deiconify()
-                
-            # Make sure window is visible
-            self.window.attributes('-alpha', 1.0)  # Make sure it's visible
-            self.window.attributes('-topmost', True)  # Bring to top
-            self.window.lift()  # Lift above other windows
-            self.window.focus_force()  # Force focus
+        # Create a new popup
+        self.create_popup()
+        
+    def update_time_label(self):
+        """Update the time label with current time including seconds"""
+        if hasattr(self, 'time_label') and self.time_label.winfo_exists():
+            current_time = datetime.now().strftime("%H:%M:%S")
+            self.time_label.config(text=f"Time: {current_time}")
             
-            # Update window to ensure changes take effect
-            self.window.update_idletasks()
-            self.window.update()
+            # No continuous updates - only update when focus is gained
             
-            # Flash the window to get attention
-            for i in range(2):
-                self.window.attributes('-alpha', 0.5)
-                self.window.update_idletasks()
-                time.sleep(0.1)
-                self.window.attributes('-alpha', 1.0)
-                self.window.update_idletasks()
-                time.sleep(0.1)
-        except Exception as e:
-            print(f"Error showing window: {e}")
-            # If there was an error, create a new popup
-            self.create_popup()
-    
     def show_popup(self):
         """Schedule popup to be shown from main thread"""
         print("show_popup called")  # Debug print
@@ -123,15 +108,13 @@ class ProductivityApp:
     def create_popup(self):
         """Create and display a productivity check popup"""
         print("create_popup called")  # Debug print
-        # If a window already exists, just bring it to front instead of creating a new one
+        # If a window already exists, destroy it to create a fresh one
         if self.window is not None and self.window.winfo_exists():
-            print("Window exists in create_popup, bringing to front")  # Debug print
-            self.window.deiconify()  # Restore if minimized
-            self.window.lift()  # Bring to front
-            self.window.focus_force()  # Focus the window
-            return
+            print("Destroying existing window to create a new one")
+            self.window.destroy()
+            self.window = None
 
-        # Record the timestamp when the popup is initiated
+        # Record the timestamp when the popup is initiated - always use current time
         self.current_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
             
         self.window = tk.Toplevel(self.root)
@@ -141,16 +124,18 @@ class ProductivityApp:
         # Make window resizable
         self.window.resizable(True, True)
         
-        # Make window always on top
+        # Make window always on top initially
         self.window.attributes('-topmost', True)
         
-        # Hide from taskbar
-        self.window.withdraw()  # First withdraw to not flash on taskbar
-        self.window.attributes('-toolwindow', True)  # Set as tool window (hides from taskbar on Windows)
-        self.window.deiconify()  # Now show it again
+        # Show in taskbar (remove the toolwindow attribute)
+        # No need to withdraw and deiconify since we want it to show in taskbar
         
-        # Handle window close event to hide instead of close
-        self.window.protocol("WM_DELETE_WINDOW", self.hide_window)
+        # Handle window close event to minimize instead of close
+        self.window.protocol("WM_DELETE_WINDOW", self.minimize_window)
+        
+        # Bind to <Map> event (window becomes visible) to update time
+        # This event occurs when the window is restored from minimized state
+        self.window.bind("<Map>", lambda e: self.update_time_label())
         
         # Center the window on screen
         self.window.update_idletasks()
@@ -160,15 +145,26 @@ class ProductivityApp:
         y = (self.window.winfo_screenheight() // 2) - (height // 2)
         self.window.geometry(f'{width}x{height}+{x}+{y}')
 
+        # Set window icon (optional)
+        try:
+            # Create a simple icon
+            icon = Image.new("RGBA", (32, 32), color=(0, 120, 215))
+            draw = ImageDraw.Draw(icon)
+            draw.rectangle([(8, 8), (24, 24)], fill=(255, 255, 255))
+            photo = ImageTk.PhotoImage(icon)
+            self.window.iconphoto(True, photo)
+        except Exception as e:
+            print(f"Error setting icon: {e}")
+
         # Configure the main frame to expand
         self.window.grid_columnconfigure(0, weight=1)
         self.window.grid_rowconfigure(2, weight=1)  # Past entry row
         self.window.grid_rowconfigure(4, weight=1)  # Next entry row
 
-        # Current time label
-        current_time = datetime.now().strftime("%H:%M")
-        time_label = tk.Label(self.window, text=f"Time: {current_time}", font=("Arial", 12))
-        time_label.grid(row=0, column=0, pady=10)
+        # Current time label - update with fresh current time including seconds
+        current_time = datetime.now().strftime("%H:%M:%S")
+        self.time_label = tk.Label(self.window, text=f"Time: {current_time}", font=("Arial", 12))
+        self.time_label.grid(row=0, column=0, pady=10)
 
         # Past 15 minutes question
         past_label = tk.Label(self.window, text="What did you get done in the past 15 minutes?")
@@ -192,10 +188,6 @@ class ProductivityApp:
         self.submit_button = tk.Button(button_frame, text="Submit", command=self.submit)
         self.submit_button.pack(side=tk.LEFT, padx=5)
         
-        # Quit button
-        quit_button = tk.Button(button_frame, text="Quit", command=self.on_quit)
-        quit_button.pack(side=tk.LEFT, padx=5)
-
         # Set tab order
         self.past_entry.focus_set()
         
@@ -203,17 +195,13 @@ class ProductivityApp:
         self.past_entry.bind("<Tab>", self.focus_next_widget)
         self.next_entry.bind("<Tab>", self.focus_next_widget)
         self.submit_button.bind("<Tab>", self.focus_next_widget)
-        quit_button.bind("<Tab>", self.focus_next_widget)
-
-        # Keep window running
-        self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def focus_next_widget(self, event):
         """Move focus to next widget when Tab is pressed"""
         event.widget.tk_focusNext().focus()
         return "break"  # Prevents the default Tab behavior
         
-    def submit(self):
+    def submit(self, minimize=True):
         """Handle form submission"""
         # Use the timestamp from when the popup was initiated
         past_text = self.past_entry.get("1.0", tk.END).strip()
@@ -227,17 +215,26 @@ class ProductivityApp:
         
         self.save_data()
         
+        # Clear the text fields
         if self.window.winfo_exists():
-            self.window.destroy()
-            self.window = None
+            self.past_entry.delete("1.0", tk.END)
+            self.next_entry.delete("1.0", tk.END)
+            
+            # Minimize the window if requested
+            if minimize:
+                self.window.iconify()  # Minimize the window
 
     def on_closing(self):
         """Handle window closing event"""
         # Save current data
         self.submit()
-        # Hide the window instead of destroying it
-        self.hide_window()
         
+    def minimize_window(self):
+        """Minimize the window instead of closing it"""
+        print("Minimizing window instead of closing")  # Debug print
+        if self.window is not None and self.window.winfo_exists():
+            self.window.iconify()  # Minimize the window
+            
     def hide_window(self):
         """Hide the window instead of closing it"""
         print("Hiding window instead of closing")  # Debug print
