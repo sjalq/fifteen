@@ -14,7 +14,7 @@ class ProductivityApp:
         self.window = None
         self.running = True
         self.data_file = "productivity_log.json"
-        self.entries = self.load_existing_data()
+        self.data = self.load_existing_data()
         self.popup_queue = queue.Queue()
         
         # Create initial window
@@ -80,18 +80,106 @@ class ProductivityApp:
 
     def load_existing_data(self):
         """Load existing data from JSON file if it exists"""
+        # Default structure with empty lists for priorities and actions
+        default_data = {
+            "priorities": [],
+            "actions": []
+        }
+        
         if os.path.exists(self.data_file):
             try:
                 with open(self.data_file, 'r') as f:
-                    return json.load(f)
-            except:
-                return {}
-        return {}
+                    data = json.load(f)
+                    
+                    # Check if we need to migrate from old format to new format
+                    if not isinstance(data, dict) or "priorities" not in data or "actions" not in data:
+                        # Create a backup of the original data file
+                        backup_file = f"{self.data_file}.backup.{datetime.now().strftime('%Y%m%d%H%M%S')}"
+                        try:
+                            import shutil
+                            shutil.copy2(self.data_file, backup_file)
+                            print(f"Created backup of original data file: {backup_file}")
+                        except Exception as e:
+                            print(f"Warning: Failed to create backup: {e}")
+                            
+                        # This is the old format, migrate it
+                        return self.migrate_old_data(data)
+                    
+                    return data
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                return default_data
+        return default_data
+    
+    def migrate_old_data(self, old_data):
+        """Migrate data from old format to new format"""
+        new_data = {
+            "priorities": [],
+            "actions": []
+        }
+        
+        # Process old data if it's a dictionary
+        if isinstance(old_data, dict):
+            for timestamp, entry in old_data.items():
+                # Skip if entry is not a dictionary
+                if not isinstance(entry, dict):
+                    continue
+                    
+                # Extract top3 if it exists
+                if "top3" in entry:
+                    new_data["priorities"].append({
+                        "time": timestamp,
+                        "text": entry["top3"]
+                    })
+                
+                # Always add the action
+                new_data["actions"].append({
+                    "time": timestamp,
+                    "past_15": entry.get("past_15", ""),
+                    "next_15": entry.get("next_15", "")
+                })
+        # If it's already in the new format, just return it
+        elif isinstance(old_data, dict) and "priorities" in old_data and "actions" in old_data:
+            return old_data
+        # If it's something else entirely, just return the default empty structure
+        
+        return new_data
+
+    def get_latest_top3(self):
+        """Get the most recent top 3 priorities from entries"""
+        # Default empty value
+        latest_top3 = ""
+        
+        # Check if we have any priorities
+        if "priorities" in self.data and self.data["priorities"]:
+            # First, sort priorities by timestamp (newest first)
+            sorted_by_time = sorted(self.data["priorities"], 
+                                   key=lambda x: x.get("time", ""), 
+                                   reverse=True)
+            
+            # Get the most recent timestamp
+            if sorted_by_time:
+                latest_time = sorted_by_time[0].get("time", "")
+                
+                # Find all priorities with this timestamp
+                latest_priorities = [p for p in sorted_by_time if p.get("time", "") == latest_time]
+                
+                # If there are multiple entries with the same timestamp, use the last one
+                # (which would be the last one added to the JSON file)
+                if latest_priorities:
+                    # Use the last one in the original list (not the sorted list)
+                    # This ensures we get the last one that was added
+                    for priority in reversed(self.data["priorities"]):
+                        if priority.get("time", "") == latest_time:
+                            latest_top3 = priority.get("text", "")
+                            break
+                
+        return latest_top3
 
     def save_data(self):
-        """Save current entries to JSON file"""
+        """Save current data to JSON file"""
         with open(self.data_file, 'w') as f:
-            json.dump(self.entries, f, indent=4)
+            json.dump(self.data, f, indent=4)
 
     def check_popup_queue(self):
         """Check if any popups are requested"""
@@ -119,7 +207,7 @@ class ProductivityApp:
             
         self.window = tk.Toplevel(self.root)
         self.window.title("Productivity Check")
-        self.window.geometry("400x300")
+        self.window.geometry("400x400")  # Increased height for new field
         
         # Make window resizable
         self.window.resizable(True, True)
@@ -158,40 +246,54 @@ class ProductivityApp:
 
         # Configure the main frame to expand
         self.window.grid_columnconfigure(0, weight=1)
-        self.window.grid_rowconfigure(2, weight=1)  # Past entry row
-        self.window.grid_rowconfigure(4, weight=1)  # Next entry row
+        self.window.grid_rowconfigure(2, weight=1)  # Top 3 row (now at top)
+        self.window.grid_rowconfigure(4, weight=1)  # Past entry row
+        self.window.grid_rowconfigure(6, weight=1)  # Next entry row
 
         # Current time label - update with fresh current time including seconds
         current_time = datetime.now().strftime("%H:%M:%S")
         self.time_label = tk.Label(self.window, text=f"Time: {current_time}", font=("Arial", 12))
         self.time_label.grid(row=0, column=0, pady=10)
 
+        # Top 3 priorities field (moved to top)
+        top3_label = tk.Label(self.window, text="Your top 3 current priorities:", font=("Arial", 10, "bold"))
+        top3_label.grid(row=1, column=0, sticky="w", padx=10, pady=(5, 0))
+        
+        self.top3_entry = tk.Text(self.window, height=4, width=40)
+        self.top3_entry.grid(row=2, column=0, sticky="nsew", padx=10, pady=5)
+        
+        # Load the most recent top 3 priorities
+        latest_top3 = self.get_latest_top3()
+        if latest_top3:
+            self.top3_entry.insert("1.0", latest_top3)
+
         # Past 15 minutes question
         past_label = tk.Label(self.window, text="What did you get done in the past 15 minutes?")
-        past_label.grid(row=1, column=0, sticky="w", padx=10, pady=(5, 0))
+        past_label.grid(row=3, column=0, sticky="w", padx=10, pady=(5, 0))
         
         self.past_entry = tk.Text(self.window, height=4, width=40)
-        self.past_entry.grid(row=2, column=0, sticky="nsew", padx=10, pady=5)
+        self.past_entry.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
 
         # Next 15 minutes question
         next_label = tk.Label(self.window, text="What's your aim for the next 15 minutes?")
-        next_label.grid(row=3, column=0, sticky="w", padx=10, pady=(5, 0))
+        next_label.grid(row=5, column=0, sticky="w", padx=10, pady=(5, 0))
         
         self.next_entry = tk.Text(self.window, height=4, width=40)
-        self.next_entry.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
+        self.next_entry.grid(row=6, column=0, sticky="nsew", padx=10, pady=5)
 
         # Button frame for Submit and Quit buttons
         button_frame = tk.Frame(self.window)
-        button_frame.grid(row=5, column=0, pady=10)
+        button_frame.grid(row=7, column=0, pady=10)
         
         # Submit button
         self.submit_button = tk.Button(button_frame, text="Submit", command=self.submit)
         self.submit_button.pack(side=tk.LEFT, padx=5)
         
-        # Set tab order
-        self.past_entry.focus_set()
+        # Set tab order - start with top3 now
+        self.top3_entry.focus_set()
         
         # Override tab behavior
+        self.top3_entry.bind("<Tab>", self.focus_next_widget)
         self.past_entry.bind("<Tab>", self.focus_next_widget)
         self.next_entry.bind("<Tab>", self.focus_next_widget)
         self.submit_button.bind("<Tab>", self.focus_next_widget)
@@ -206,16 +308,28 @@ class ProductivityApp:
         # Use the timestamp from when the popup was initiated
         past_text = self.past_entry.get("1.0", tk.END).strip()
         next_text = self.next_entry.get("1.0", tk.END).strip()
-
-        # Store the entry
-        self.entries[self.current_timestamp] = {
+        top3_text = self.top3_entry.get("1.0", tk.END).strip()
+        
+        # Get the most recent top3 value to compare
+        latest_top3 = self.get_latest_top3()
+        
+        # Always add an action entry
+        self.data["actions"].append({
+            "time": self.current_timestamp,
             "past_15": past_text,
             "next_15": next_text
-        }
+        })
+        
+        # Only add a priority entry if the top3 text has changed
+        if top3_text != latest_top3:
+            self.data["priorities"].append({
+                "time": self.current_timestamp,
+                "text": top3_text
+            })
         
         self.save_data()
         
-        # Clear the text fields
+        # Clear the text fields except top3
         if self.window.winfo_exists():
             self.past_entry.delete("1.0", tk.END)
             self.next_entry.delete("1.0", tk.END)
@@ -261,4 +375,4 @@ class ProductivityApp:
                 time.sleep(60)  # Wait a minute before checking again
 
 if __name__ == "__main__":
-    app = ProductivityApp() 
+    app = ProductivityApp()
