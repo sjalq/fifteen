@@ -369,6 +369,9 @@ class ProductivityApp:
         # This event occurs when the window is restored from minimized state
         self.window.bind("<Map>", lambda e: self.update_time_label())
         
+        # Track window state and handle minimize - use Unmap event
+        self.window.bind("<Unmap>", self.handle_unmap_event)
+        
         # Add a binding to handle clicks outside the window
         self.window.bind("<Button-1>", self.handle_click)
         
@@ -550,9 +553,9 @@ class ProductivityApp:
             self.past_entry.delete("1.0", tk.END)
             self.next_entry.delete("1.0", tk.END)
             
-            # Hide the window if requested (withdraw completely, don't just minimize)
-            if minimize:
-                self.window.withdraw()  # Hide the window completely
+        # Hide the window if requested (withdraw completely, don't just minimize)
+        if minimize and self.window.winfo_exists():
+            self.window.withdraw()  # Hide the window completely
 
     def on_closing(self):
         """Handle window closing event"""
@@ -570,6 +573,35 @@ class ProductivityApp:
         print("Hiding window instead of closing")  # Debug print
         if self.window is not None and self.window.winfo_exists():
             self.window.withdraw()
+    
+    def handle_unmap_event(self, event):
+        """Handle window unmap event - when window is minimized or hidden"""
+        try:
+            if self.window and self.window.winfo_exists():
+                current_state = self.window.state()
+                print(f"Unmap event - window state: {current_state}")
+                
+                # If window was minimized (iconic), submit and hide completely
+                if current_state == 'iconic':
+                    print("Window minimized - submitting and hiding from taskbar")
+                    # Submit the form normally (save data and clear fields)
+                    self.submit(minimize=False)
+                    # Then force complete withdrawal from taskbar
+                    self.window.after(50, self.force_hide_from_taskbar)
+                
+        except Exception as e:
+            print(f"Error in handle_unmap_event: {e}")
+    
+    def force_hide_from_taskbar(self):
+        """Force the window to be completely hidden from taskbar"""
+        try:
+            if self.window and self.window.winfo_exists():
+                print("Forcing window to withdraw from taskbar")
+                self.window.withdraw()
+                # Double-check that it's really withdrawn
+                self.window.after(50, lambda: self.window.withdraw() if self.window.winfo_exists() else None)
+        except Exception as e:
+            print(f"Error in force_hide_from_taskbar: {e}")
 
     def handle_click(self, event):
         """Handle clicks on the window"""
