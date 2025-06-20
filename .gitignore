@@ -8,8 +8,8 @@ __pycache__/
 # Distribution / packaging
 /build/
 /build/**/*
-/dist/
-/dist/**/*
+#/dist/
+#/dist/**/*
 *.manifest
 *.spec
 

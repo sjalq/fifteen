@@ -1,0 +1,1418 @@
+{
+    "priorities": [
+        {
+            "time": "2025-03-13 10:33",
+            "text": "1. Sakeliga tickets\n2. Being focused\n3. Downgrading medi premium"
+        },
+        {
+            "time": "2025-03-13 16:45",
+            "text": "1. Sakeliga tickets\n2. Being focused\n3. Downgrading medi premium (DONE!)"
+        },
+        {
+            "time": "2025-03-14 10:59",
+            "text": "1. Sakeliga tickets\n2. Being focused\n3. Getting Philip's tool out"
+        },
+        {
+            "time": "2025-03-14 17:00",
+            "text": "1. Sakeliga tickets\n2. Upgrade your knowledge of Cloudflare to catch up with Chris\n3. Getting Philip's tool out"
+        },
+        {
+            "time": "2025-03-16 11:30",
+            "text": ""
+        },
+        {
+            "time": "2025-03-16 12:30",
+            "text": "1. CV tool"
+        },
+        {
+            "time": "2025-03-18 14:30",
+            "text": "1. CV tool\n2. Sync oor board meeting\n3. Decide oor Philip feedback"
+        },
+        {
+            "time": "2025-03-19 11:53",
+            "text": "1. Activate all Debit Orders for the 25th -> 31st"
+        },
+        {
+            "time": "2025-03-22 22:20",
+            "text": "1. Use multicloud to work around the upload requirement"
+        },
+        {
+            "time": "2025-03-22 22:30",
+            "text": "1. https://grok.com/share/bGVnYWN5_010ff4e3-6ae6-4f60-83b2-ff08e51ff312"
+        },
+        {
+            "time": "2025-03-25 09:45",
+            "text": "1. Make the batch for the 1st to the 15th.\n2. Make sure the batch contains everyone it can"
+        },
+        {
+            "time": "2025-03-26 11:15",
+            "text": "1. Chris se bookingn"
+        },
+        {
+            "time": "2025-03-26 14:15",
+            "text": "1. Chris se booking"
+        },
+        {
+            "time": "2025-03-28 14:15",
+            "text": "1. Confirm everything is active\n2. Handoeke"
+        },
+        {
+            "time": "2025-03-29 11:31",
+            "text": "1. Improve autocatalisis"
+        },
+        {
+            "time": "2025-04-02 09:45",
+            "text": "1. Do all the tickets!!! Bhoahahaha\n2. Do like at least 30min of RR"
+        },
+        {
+            "time": "2025-04-03 04:45",
+            "text": "1. Do all the tickets!!! Bhoahahaha\n2. Do like at least 30min of RR\n3. Remove the browser cookie stuff from starter-project"
+        },
+        {
+            "time": "2025-04-07 10:30",
+            "text": "1. Sort out your taxes.\n2. Plan the week / day\n3. Do the tickets\n4. Plan Leon's app\n5. Enjoy"
+        },
+        {
+            "time": "2025-04-13 23:15",
+            "text": ""
+        },
+        {
+            "time": "2025-04-14 13:00",
+            "text": "1. Finish the Amplifin import\n2. Fix the feedback with Marlene"
+        },
+        {
+            "time": "2025-04-15 01:16:37",
+            "text": "1. Finish the Amplifin import\n2. Fix the feedback with Marlene\n3. Did this work"
+        },
+        {
+            "time": "2025-04-15 12:45:00",
+            "text": "1. Finish the Amplifin import\n2. Fix the feedback with Marlene\n3. Did this work\n4. Get ABSA guys back up and running before Wed at 1500"
+        },
+        {
+            "time": "2025-04-16 16:30:01",
+            "text": "1. Finish the Amplifin import\n2. Fix the feedback with Marlene\n3. Get ABSA guys back up and running before Wed at 1500"
+        },
+        {
+            "time": "2025-04-18 16:32:12",
+            "text": "0. Focus on what is actually important\n1. Finish the Amplifin import\n2. Fix the feedback with Marlene\n3. Get ABSA guys back up and running before Wed at 1500"
+        },
+        {
+            "time": "2025-04-29 11:00:01",
+            "text": "0. Focus on what is actually important\n1. Finish ABSA once-offs\n2. Resolve ABSA cancellations\n3. Chat with Delina about source document and invoice\n4. Get import operational"
+        },
+        {
+            "time": "2025-05-12 11:10:30",
+            "text": "0. Focus on what is actually important\n1. Finish ABSA once-offs\n2. Resolve ABSA cancellations\n3. Chat with Delina about source document and invoice\n4. Get import operational\n5. Add all other disputes, even if they only happened only once."
+        },
+        {
+            "time": "2025-05-12 11:15:01",
+            "text": "0. Focus on what is actually important\n1. Finish ABSA once-offs\n2. Resolve ABSA cancellations\n3. Chat with Delina about source document and invoice\n4. Get import operational\n5. Add all other disputes, even if they only happened only once.\n6. Get LibreChat (if it has MCP) working for the business"
+        },
+        {
+            "time": "2025-05-12 11:30:00",
+            "text": "0. Focus on what is actually important\n1. Finish ABSA once-offs\n2. Resolve ABSA cancellations\n3. Chat with Delina about source document and invoice\n4. Get import operational\n5. Add all other disputes, even if they only happened only once.\n6. Get LibreChat (if it has MCP) working for the business\n7. Add components to the Starter-App"
+        },
+        {
+            "time": "2025-05-12 16:00:00",
+            "text": "0. Grant's money\n1. List all your money and where it is - coinhodler if you must\n2. Consider buying with stop losses. \n3. Sleep on time again.\n5. Add all other disputes, even if they only happened only once.\n6. Get LibreChat (if it has MCP) working for the business\n7. Add components to the Starter-App"
+        },
+        {
+            "time": "2025-05-24 13:43:17",
+            "text": "1. Finish receipt system\n2. Finish and deploy tx syncer\n3. Deploy improved interface for syncer / dashboard"
+        },
+        {
+            "time": "2025-05-25 17:05:48",
+            "text": "Bathroom-sync app:\n* Timers vir alles\n* Receipt generation \n* Search screen om enige iemand te kan opspoor in die DW\n* Delina se report (iets is baie weird hier)\n* Nuwe syncer 20x vinniger kry, wat letterlik 3 dae\u00a0om\u00a0te\u00a0hardloop."
+        },
+        {
+            "time": "2025-05-25 22:15:00",
+            "text": "Bathroom-sync app:\n* Timers vir alles\n* Receipt generation \n* Search screen om enige iemand te kan opspoor in die DW\n* Delina se report (iets is baie weird hier)\n* Nuwe syncer 20x vinniger kry, wat letterlik 3 dae\u00a0om\u00a0te\u00a0hardloop.\n* Run the dish washer"
+        },
+        {
+            "time": "2025-05-26 11:00:01",
+            "text": "Bathroom-sync app:\n* Timers vir alles - Add Logs on start\n* Delina se report (iets is baie weird hier) - From date\n* Nuwe syncer 20x vinniger kry, wat letterlik 3 dae\u00a0om\u00a0te\u00a0hardloop.\n* Sync with the Frech guy"
+        },
+        {
+            "time": "2025-05-28 14:15:01",
+            "text": "Bathroom-sync app:\n* Timers vir alles - Add Logs on start\n* Nuwe syncer 20x vinniger kry, wat letterlik 3 dae\u00a0om\u00a0te\u00a0hardloop.\n* Get my"
+        },
+        {
+            "time": "2025-05-28 14:30:01",
+            "text": "Bathroom-sync app:\n* Timers vir alles - Add Logs on start\n* Nuwe syncer 20x vinniger kry, wat letterlik 3 dae\u00a0om\u00a0te\u00a0hardloop.\n* Get my videos transcribed"
+        },
+        {
+            "time": "2025-05-28 15:15:00",
+            "text": "Bathroom-sync app:\n* Timers vir alles - Add Logs on start\n* Nuwe syncer 20x vinniger kry, wat letterlik 3 dae\u00a0om\u00a0te\u00a0hardloop.\n* Get my videos transcribed\n* Update die sharing links vir Lex Libertas"
+        },
+        {
+            "time": "2025-06-02 14:01:39",
+            "text": "* go to bed on time"
+        },
+        {
+            "time": "2025-06-09 11:24:39",
+            "text": "* go to bed on time\n* get as many tickets out as possible"
+        }
+    ],
+    "actions": [
+        {
+            "time": "2025-03-07 12:00",
+            "past_15": "Plan is completed",
+            "next_15": "Check with Chris if he is on board with the plan"
+        },
+        {
+            "time": "2025-03-07 12:16",
+            "past_15": "Karen is on Amplifin",
+            "next_15": "Chat to Chris about the Amplifin plan"
+        },
+        {
+            "time": "2025-03-07 12:33",
+            "past_15": "I confirmed that Chris is happy with the Amplifin update plan for the initial batach",
+            "next_15": "Write out the plan on the ticket.\nMove all the related tickets to done."
+        },
+        {
+            "time": "2025-03-07 12:49",
+            "past_15": "Not done yet with previous",
+            "next_15": "Gonna update the plan ticket - including the yearlies."
+        },
+        {
+            "time": "2025-03-07 13:00",
+            "past_15": "Still busy with Marlene",
+            "next_15": "\"The plan ticket\""
+        },
+        {
+            "time": "2025-03-07 13:15",
+            "past_15": "break",
+            "next_15": "Fill in that ticket"
+        },
+        {
+            "time": "2025-03-07 13:45",
+            "past_15": "* Chatted to Jacques, confirmed that everything for March 16 will be activated\n* Finished ticket -> assigned to Chris",
+            "next_15": "Write the comparison scripts"
+        },
+        {
+            "time": "2025-03-07 14:06",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-07 14:08",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-11 14:03",
+            "past_15": "* I had a long ass chat with Chris. It may or may not have been productive.\n* I simplified the `fifteen` app.",
+            "next_15": "Find a solution to Ernst's crypto donation acceptance problem"
+        },
+        {
+            "time": "2025-03-11 14:13",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-11 14:15",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-11 14:22",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-11 14:29",
+            "past_15": "I booked someone to come fix the window.\nI made the booking thing unquitable.",
+            "next_15": "I want to get Auth working in the starter-project"
+        },
+        {
+            "time": "2025-03-11 14:35",
+            "past_15": "I am still on the fifteen app",
+            "next_15": "want to fiunish this\nthen get auth on starter-projectab"
+        },
+        {
+            "time": "2025-03-11 14:38",
+            "past_15": "On the fifteen app",
+            "next_15": "adding auth"
+        },
+        {
+            "time": "2025-03-11 15:22",
+            "past_15": "ignore",
+            "next_15": "this"
+        },
+        {
+            "time": "2025-03-11 16:00",
+            "past_15": "made food",
+            "next_15": "eat food\nadd auth to starter-project"
+        },
+        {
+            "time": "2025-03-12 10:23",
+            "past_15": "Coffee",
+            "next_15": "Check that all the 16th's things are in\nTotals:\nSpot Checks from Switch\nSpot Checks from Amplifin"
+        },
+        {
+            "time": "2025-03-12 10:30",
+            "past_15": "Still with Marlene",
+            "next_15": "Totals"
+        },
+        {
+            "time": "2025-03-12 10:45",
+            "past_15": "Got distracted",
+            "next_15": "Sum the totals per Afrisake + Sakeliga"
+        },
+        {
+            "time": "2025-03-12 11:00",
+            "past_15": "Got distracted again",
+            "next_15": "Do the Amplifin comparison totals - close all other windows"
+        },
+        {
+            "time": "2025-03-12 11:15",
+            "past_15": "Marlene - checking totals",
+            "next_15": "Complete Totals"
+        },
+        {
+            "time": "2025-03-12 11:30",
+            "past_15": "Still on the totals - You are still unfocused, pull it together! lol",
+            "next_15": "Totals"
+        },
+        {
+            "time": "2025-03-12 12:15",
+            "past_15": "See we're missing 850",
+            "next_15": "Getting totals to match"
+        },
+        {
+            "time": "2025-03-12 12:45",
+            "past_15": "Found there are 6 extras and R350 extra",
+            "next_15": "Land this"
+        },
+        {
+            "time": "2025-03-13 09:18",
+            "past_15": "Got requirements from Philip way down",
+            "next_15": "Fifteen up as a default start app on windows"
+        },
+        {
+            "time": "2025-03-13 09:30",
+            "past_15": "Made fifteen work as a background windows app!",
+            "next_15": "Prioritize my day - watch Doops' show"
+        },
+        {
+            "time": "2025-03-13 10:33",
+            "past_15": "Got this thing working nicely (I think)",
+            "next_15": "Showering, saying high to Eline, drinking my pill."
+        },
+        {
+            "time": "2025-03-13 10:45",
+            "past_15": "Chat to Eugene",
+            "next_15": "Shower, etc."
+        },
+        {
+            "time": "2025-03-13 11:15",
+            "past_15": "Chatted to Eugene",
+            "next_15": "Catch up with Chris"
+        },
+        {
+            "time": "2025-03-13 11:45",
+            "past_15": "Caught up with Chris",
+            "next_15": "Work on Solidariteit commission ticket"
+        },
+        {
+            "time": "2025-03-13 12:15",
+            "past_15": "Caught up with Chris.",
+            "next_15": "Read and execute the"
+        },
+        {
+            "time": "2025-03-13 12:30",
+            "past_15": "Paid Eugene",
+            "next_15": "Eat something."
+        },
+        {
+            "time": "2025-03-13 13:00",
+            "past_15": "Ate good",
+            "next_15": "Finishing the AI MCP video"
+        },
+        {
+            "time": "2025-03-13 13:15",
+            "past_15": "Watching AI video",
+            "next_15": "Finish video\nClose videos\nRead the ticket, think about it."
+        },
+        {
+            "time": "2025-03-13 13:30",
+            "past_15": "Asked Piet and Russel what they love doing at Sakeliga the most?",
+            "next_15": "Read that damn ticket"
+        },
+        {
+            "time": "2025-03-13 14:15",
+            "past_15": "working on dashboard for some reason??",
+            "next_15": "finish dashboard then read that ticket?"
+        },
+        {
+            "time": "2025-03-13 14:45",
+            "past_15": "Fucking around",
+            "next_15": "Working on the Soltrust ticket"
+        },
+        {
+            "time": "2025-03-13 15:45",
+            "past_15": "Stacey call - {null}",
+            "next_15": "Fond out what that ticket is supposed to do"
+        },
+        {
+            "time": "2025-03-13 16:00",
+            "past_15": "Gained momentum with the ticket",
+            "next_15": "Figure out what the ticket is supposed to achieve precisely."
+        },
+        {
+            "time": "2025-03-13 16:15",
+            "past_15": "Asked for clarification on the email",
+            "next_15": "Get yoru med premium down"
+        },
+        {
+            "time": "2025-03-13 16:45",
+            "past_15": "Downgraded medical ins",
+            "next_15": "I dunno"
+        },
+        {
+            "time": "2025-03-13 16:45",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-13 17:15",
+            "past_15": "Just puttering",
+            "next_15": "More puttering"
+        },
+        {
+            "time": "2025-03-13 17:30",
+            "past_15": "Make an email template in hubspot",
+            "next_15": "Implement one in the Donations code base"
+        },
+        {
+            "time": "2025-03-13 17:45",
+            "past_15": "Making the email template",
+            "next_15": "Make email templates from thank yous."
+        },
+        {
+            "time": "2025-03-13 18:00",
+            "past_15": "Busy with email template",
+            "next_15": "bos"
+        },
+        {
+            "time": "2025-03-13 19:45",
+            "past_15": "Bos",
+            "next_15": "Putter"
+        },
+        {
+            "time": "2025-03-14 10:59",
+            "past_15": "Called with Chris",
+            "next_15": "Close all windows, focus on JUST the Soltech ticket"
+        },
+        {
+            "time": "2025-03-14 11:15",
+            "past_15": "Puttered",
+            "next_15": "Watching first part of ManisAI video"
+        },
+        {
+            "time": "2025-03-14 11:30",
+            "past_15": "Unfocused - Get focused.",
+            "next_15": "Skip ahead on manus video"
+        },
+        {
+            "time": "2025-03-14 11:45",
+            "past_15": "Close other things, focusing on Soltrust ticket",
+            "next_15": "Soltrust ticket"
+        },
+        {
+            "time": "2025-03-14 12:30",
+            "past_15": "Got distracted, multitasking",
+            "next_15": "focusing on script"
+        },
+        {
+            "time": "2025-03-14 12:45",
+            "past_15": "Dogs potty - Busy with script",
+            "next_15": "Finish Soltrust"
+        },
+        {
+            "time": "2025-03-14 13:00",
+            "past_15": "Python script still failing.",
+            "next_15": "Get it to insert and explain the problems"
+        },
+        {
+            "time": "2025-03-14 13:15",
+            "past_15": "busy with soltrust",
+            "next_15": "soltrust"
+        },
+        {
+            "time": "2025-03-14 13:45",
+            "past_15": "still on the damn soltrust thing",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-14 14:45",
+            "past_15": "Finished soltrust_ticket",
+            "next_15": "Test BTC and Eth payments to Ernst"
+        },
+        {
+            "time": "2025-03-14 15:45",
+            "past_15": "caught up with Philip",
+            "next_15": "Eat / watch futureman"
+        },
+        {
+            "time": "2025-03-14 16:15",
+            "past_15": "ate the food",
+            "next_15": "do the pdf thing"
+        },
+        {
+            "time": "2025-03-14 17:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-14 19:45",
+            "past_15": "bos",
+            "next_15": "get mistal stuff going"
+        },
+        {
+            "time": "2025-03-15 10:15",
+            "past_15": "Booted up",
+            "next_15": "Getting CLouflare invite ready."
+        },
+        {
+            "time": "2025-03-15 10:30",
+            "past_15": "Got on cloud flare",
+            "next_15": "Get repo\nUnderstand structure\nStart with PDF reader"
+        },
+        {
+            "time": "2025-03-15 10:45",
+            "past_15": "Cloudflare up\nPDF Gem2 code (no idea if working)",
+            "next_15": "Test run PDF"
+        },
+        {
+            "time": "2025-03-15 11:00",
+            "past_15": "Got test page up",
+            "next_15": "Get test page working"
+        },
+        {
+            "time": "2025-03-15 11:15",
+            "past_15": "HTML working, but quality is questionable.",
+            "next_15": "Get better model.\nMake quality good good"
+        },
+        {
+            "time": "2025-03-15 11:30",
+            "past_15": "Pro 2 didn't work",
+            "next_15": "changing it so we can swap out Mistral OCR"
+        },
+        {
+            "time": "2025-03-15 12:00",
+            "past_15": "Figure out Mistral",
+            "next_15": "Figure out Mistral"
+        },
+        {
+            "time": "2025-03-15 12:15",
+            "past_15": "",
+            "next_15": "read the mistral doc"
+        },
+        {
+            "time": "2025-03-15 12:45",
+            "past_15": "Getting Mistral OCR to work again",
+            "next_15": "Getting Mistral OCR to work again"
+        },
+        {
+            "time": "2025-03-15 13:00",
+            "past_15": "OCR from Mistral seems to work well",
+            "next_15": "find way to test endpointy thing"
+        },
+        {
+            "time": "2025-03-15 14:30",
+            "past_15": "Getting the service to work",
+            "next_15": "Get the service to work"
+        },
+        {
+            "time": "2025-03-15 15:15",
+            "past_15": "Getting Mistral do decode the stuff successfully live",
+            "next_15": "Getting Mistral do decode the stuff successfully live"
+        },
+        {
+            "time": "2025-03-16 11:30",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-16 12:30",
+            "past_15": "Got myself calm",
+            "next_15": "Got the tampermonkey to immediately process"
+        },
+        {
+            "time": "2025-03-16 12:45",
+            "past_15": "Tampermoney logging correctly",
+            "next_15": "Getting Mistral error"
+        },
+        {
+            "time": "2025-03-16 13:00",
+            "past_15": "Mistral logging",
+            "next_15": "Mistral logging."
+        },
+        {
+            "time": "2025-03-16 13:45",
+            "past_15": "distracted with twitter",
+            "next_15": "get mistralOCR response working"
+        },
+        {
+            "time": "2025-03-16 19:31",
+            "past_15": "bos",
+            "next_15": "clear buckets"
+        },
+        {
+            "time": "2025-03-16 20:00",
+            "past_15": "ate",
+            "next_15": "clean out bucket\nfind a way to test the browser render funcitonality."
+        },
+        {
+            "time": "2025-03-16 21:00",
+            "past_15": "Fixing the extra endpoint",
+            "next_15": "Fix endpoint, test bucket"
+        },
+        {
+            "time": "2025-03-16 21:30",
+            "past_15": "fixing db error",
+            "next_15": "test the PNG render"
+        },
+        {
+            "time": "2025-03-16 21:45",
+            "past_15": "Got the Tamper Monkey process trigger fixed",
+            "next_15": "Fix SQL error\nFix PNG render"
+        },
+        {
+            "time": "2025-03-16 22:00",
+            "past_15": "Fixed the db",
+            "next_15": "Found out why the render does not work"
+        },
+        {
+            "time": "2025-03-16 22:30",
+            "past_15": "PNG test",
+            "next_15": "PNG test"
+        },
+        {
+            "time": "2025-03-16 23:00",
+            "past_15": "Trying Render approach",
+            "next_15": "Get render approach concluded"
+        },
+        {
+            "time": "2025-03-16 23:00",
+            "past_15": "Still attempting to get the Clouflare Rendering to work.",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-17 11:45",
+            "past_15": "Synced with Chris",
+            "next_15": "Watch Kyle's show"
+        },
+        {
+            "time": "2025-03-17 16:30",
+            "past_15": "Ersnt call",
+            "next_15": "Be less dispondent"
+        },
+        {
+            "time": "2025-03-18 10:45",
+            "past_15": "Boot up",
+            "next_15": "Putter, watch Kyle"
+        },
+        {
+            "time": "2025-03-18 13:45",
+            "past_15": "Philip call",
+            "next_15": "Philip call"
+        },
+        {
+            "time": "2025-03-18 14:00",
+            "past_15": "Philip call",
+            "next_15": "Start the friggen sprint"
+        },
+        {
+            "time": "2025-03-18 14:30",
+            "past_15": "Philip\nHansa Headquarter (Solution to HHQ) - Dashboard",
+            "next_15": "Chris se goal chat"
+        },
+        {
+            "time": "2025-03-18 15:15",
+            "past_15": "Backlog grooming",
+            "next_15": "Groom backlog"
+        },
+        {
+            "time": "2025-03-18 15:30",
+            "past_15": "Sprint decided upon",
+            "next_15": "Eat + watch futureman"
+        },
+        {
+            "time": "2025-03-19 11:53",
+            "past_15": "Nothing",
+            "next_15": "Shower, drink energy drink, say hi to Eline, put on nicotine patach"
+        },
+        {
+            "time": "2025-03-19 13:30",
+            "past_15": "Chatted to Jacques about the reversals",
+            "next_15": "Generate the next batch for the 25th->31st"
+        },
+        {
+            "time": "2025-03-19 13:45",
+            "past_15": "Accomplished nothing - just upset at Laura Shin and Amplifin now",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-19 14:30",
+            "past_15": "Still upset, this time at Heinz again",
+            "next_15": "Eat something. Close the other shit, just go make some patties and eggs"
+        },
+        {
+            "time": "2025-03-19 17:15",
+            "past_15": "On a meeting with Chris to find the missing 6%",
+            "next_15": "Call someone I guess."
+        },
+        {
+            "time": "2025-03-20 14:00",
+            "past_15": "Distracted, but got a comparison script up.",
+            "next_15": "You have till 1500 to upload."
+        },
+        {
+            "time": "2025-03-20 14:15",
+            "past_15": "File uploaded",
+            "next_15": "Check results"
+        },
+        {
+            "time": "2025-03-20 16:15",
+            "past_15": "Got dash out for Andries.",
+            "next_15": "Getting up to speed with changes to Airtable app"
+        },
+        {
+            "time": "2025-03-21 15:00",
+            "past_15": "Found a new version of fusion and I'm implementing it into the starter project",
+            "next_15": "Install Fusion and get it working in the admin page"
+        },
+        {
+            "time": "2025-03-21 15:15",
+            "past_15": "Got the npx stuff working",
+            "next_15": "Get the editor working in the Admin screen."
+        },
+        {
+            "time": "2025-03-21 16:00",
+            "past_15": "Still trying to get it to work \n* Note the extent of changes Claude wants to make to Lamdera is too big.",
+            "next_15": "Get Fusion editor in new starter branch"
+        },
+        {
+            "time": "2025-03-22 22:20",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-22 22:30",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-23 17:00",
+            "past_15": "f-all",
+            "next_15": "invoice"
+        },
+        {
+            "time": "2025-03-25 09:45",
+            "past_15": "Puttered",
+            "next_15": "Meditate before your meeting with Mario"
+        },
+        {
+            "time": "2025-03-26 11:15",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-26 14:15",
+            "past_15": "Chris se verblyf is sorted",
+            "next_15": "Vibe code met Chris - delete, delete, delete"
+        },
+        {
+            "time": "2025-03-26 14:30",
+            "past_15": "Waited for Chris to vibe code with me :-(",
+            "next_15": "Vibe code on my own :-)"
+        },
+        {
+            "time": "2025-03-26 16:00",
+            "past_15": "Vibe coded with Chris",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-28 13:15",
+            "past_15": "Still puttering\nOffered to help Chris with ECV",
+            "next_15": "Run the consistency check"
+        },
+        {
+            "time": "2025-03-28 13:30",
+            "past_15": "Focusing",
+            "next_15": "Get the 5 contacts to Grant for ABSA"
+        },
+        {
+            "time": "2025-03-28 13:45",
+            "past_15": "Email about 5 ABSA people sent",
+            "next_15": "Cancel your own test installments on the system."
+        },
+        {
+            "time": "2025-03-28 13:45",
+            "past_15": "My stuff canceled (was already canceled)",
+            "next_15": "Check up on the current status of all our clients on Amplifin vs all our clients on Switch"
+        },
+        {
+            "time": "2025-03-28 14:15",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-03-28 14:30",
+            "past_15": "Comparing scripts",
+            "next_15": "Making one comparison script"
+        },
+        {
+            "time": "2025-03-28 15:00",
+            "past_15": "Handoeke",
+            "next_15": "Comparing the files"
+        },
+        {
+            "time": "2025-03-28 16:00",
+            "past_15": "Got availability from Charlon",
+            "next_15": "Finish the comparison"
+        },
+        {
+            "time": "2025-03-28 16:15",
+            "past_15": "Break",
+            "next_15": "Get comparison done"
+        },
+        {
+            "time": "2025-03-28 16:30",
+            "past_15": "Comparing the DW to Amplifin",
+            "next_15": "Get the comparison done"
+        },
+        {
+            "time": "2025-03-28 17:00",
+            "past_15": "Reverted to doing it the old fashioned way.",
+            "next_15": "I need a way to see if I should be in blue or green mode. Blue is AI, green is brain looking at problem."
+        },
+        {
+            "time": "2025-03-28 17:15",
+            "past_15": "Installing MCP for Postgres, might be a mistake",
+            "next_15": "Desperately try to solve the problem at hand."
+        },
+        {
+            "time": "2025-03-29 11:31",
+            "past_15": "",
+            "next_15": "Implement Theron's suggestions"
+        },
+        {
+            "time": "2025-03-29 12:00",
+            "past_15": "made mcd file",
+            "next_15": "check if it flies"
+        },
+        {
+            "time": "2025-03-29 12:15",
+            "past_15": "Oneshotting finance app",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-01 11:30",
+            "past_15": "Cleaned up the back",
+            "next_15": "Reallign with sprint"
+        },
+        {
+            "time": "2025-04-01 14:00",
+            "past_15": "Got feedback from Amplifin",
+            "next_15": "Give feedback\nFix company sync"
+        },
+        {
+            "time": "2025-04-01 14:45",
+            "past_15": "Fixed the company sync bugs.",
+            "next_15": "Yeet erroneous Hubspot details"
+        },
+        {
+            "time": "2025-04-01 15:00",
+            "past_15": "Fixing faulty hubspot data",
+            "next_15": "Fixing faulty hubspot data"
+        },
+        {
+            "time": "2025-04-01 17:15",
+            "past_15": "Restarted Cursor since the tool keeps failing.",
+            "next_15": "Make the delete app"
+        },
+        {
+            "time": "2025-04-01 19:15",
+            "past_15": "bos",
+            "next_15": "get thing running"
+        },
+        {
+            "time": "2025-04-01 20:00",
+            "past_15": "Still fixing the call to hubspot to delete",
+            "next_15": "get the delete call only to work."
+        },
+        {
+            "time": "2025-04-02 09:45",
+            "past_15": "Putter",
+            "next_15": "Kyle doops"
+        },
+        {
+            "time": "2025-04-02 10:45",
+            "past_15": "Somewhat caught up with Chris",
+            "next_15": "Delete those faulty records from hubspot."
+        },
+        {
+            "time": "2025-04-02 11:15",
+            "past_15": "Restarted delete app",
+            "next_15": "Delete just those faulty records."
+        },
+        {
+            "time": "2025-04-02 13:00",
+            "past_15": "Abandoned the delete of events ticket",
+            "next_15": "Contact Jacques wrt the Rest APIs"
+        },
+        {
+            "time": "2025-04-02 16:00",
+            "past_15": "Got the mappings right",
+            "next_15": "get the ETL base structure up"
+        },
+        {
+            "time": "2025-04-02 16:15",
+            "past_15": "Gemini 2.5 is doing well",
+            "next_15": "Go to bos"
+        },
+        {
+            "time": "2025-04-02 18:30",
+            "past_15": "Implemented all the ETL code for Amplifin",
+            "next_15": "Build tests for Amplifin"
+        },
+        {
+            "time": "2025-04-03 04:45",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-03 11:30",
+            "past_15": "zonked out, working on starter-project",
+            "next_15": "who knows, just get going I guess"
+        },
+        {
+            "time": "2025-04-03 11:45",
+            "past_15": "Still puttering kinda",
+            "next_15": "More puttering"
+        },
+        {
+            "time": "2025-04-07 10:30",
+            "past_15": "Plan the day",
+            "next_15": "Plan the day"
+        },
+        {
+            "time": "2025-04-07 10:45",
+            "past_15": "Planned lots of the day",
+            "next_15": "Lamdera skelly for Leon"
+        },
+        {
+            "time": "2025-04-07 11:00",
+            "past_15": "Synced with Chris",
+            "next_15": "Get Lamdera exchange project booted"
+        },
+        {
+            "time": "2025-04-07 11:30",
+            "past_15": "Tax call",
+            "next_15": "Marlene"
+        },
+        {
+            "time": "2025-04-07 13:15",
+            "past_15": "Leon discussion with Chris",
+            "next_15": "Chat about tech stack"
+        },
+        {
+            "time": "2025-04-07 14:00",
+            "past_15": "Tech stack",
+            "next_15": "Marton handover"
+        },
+        {
+            "time": "2025-04-08 15:15",
+            "past_15": "",
+            "next_15": "Get mandate test working"
+        },
+        {
+            "time": "2025-04-13 14:30",
+            "past_15": "Read the toc for the Amplifin docs",
+            "next_15": "Getting the source truth of what the best way will be to load the bank accounts, subs and txs"
+        },
+        {
+            "time": "2025-04-13 23:15",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-14 13:00",
+            "past_15": "Got going",
+            "next_15": "Wire up full Amplifin sync"
+        },
+        {
+            "time": "2025-04-15 01:16:37",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-15 01:17:29",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-15 01:17:29",
+            "past_15": "Made this thing a lot pretties and closable",
+            "next_15": "Go to sleep"
+        },
+        {
+            "time": "2025-04-15 10:45:00",
+            "past_15": "Caught up with Chris",
+            "next_15": "Getting Erns-dash to work"
+        },
+        {
+            "time": "2025-04-15 11:15:01",
+            "past_15": "Hubspot",
+            "next_15": "Walk and drink a Energy Drink"
+        },
+        {
+            "time": "2025-04-15 12:00:00",
+            "past_15": "Energy drink",
+            "next_15": "Meeting met Jacques en Marlene"
+        },
+        {
+            "time": "2025-04-15 12:45:00",
+            "past_15": "Phasing out on a call, not paying attention",
+            "next_15": "Leave meeting? \nSkip to accounting and let them complete things?"
+        },
+        {
+            "time": "2025-04-15 12:45:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-16 15:02:04",
+            "past_15": "Got the site to compile",
+            "next_15": "Getting the sync to sync"
+        },
+        {
+            "time": "2025-04-16 15:15:00",
+            "past_15": "Got a basic element to display, although not correctly.",
+            "next_15": "Eat cheese"
+        },
+        {
+            "time": "2025-04-16 15:30:01",
+            "past_15": "Ate cheese",
+            "next_15": "Catch up with Chris"
+        },
+        {
+            "time": "2025-04-16 15:45:00",
+            "past_15": "Progress on syncer",
+            "next_15": "Smoke"
+        },
+        {
+            "time": "2025-04-16 16:00:00",
+            "past_15": "progress on the syncer",
+            "next_15": "Gonna smoke now"
+        },
+        {
+            "time": "2025-04-16 16:30:01",
+            "past_15": "Personal",
+            "next_15": "Finish the sync"
+        },
+        {
+            "time": "2025-04-16 16:30:01",
+            "past_15": "Helped Claude understand the mappings.",
+            "next_15": "Help claude furtheR?"
+        },
+        {
+            "time": "2025-04-16 17:15:00",
+            "past_15": "Wroknig on syncer",
+            "next_15": "Work on syncer\nBrush teeth?"
+        },
+        {
+            "time": "2025-04-17 13:05:21",
+            "past_15": "Got started",
+            "next_15": "Start Sprint - Run sync - Check sync"
+        },
+        {
+            "time": "2025-04-17 14:30:00",
+            "past_15": "Very far into the syncing code.\nWired up the errors.\nGot it syncing from a point in time",
+            "next_15": "Run it successfully once."
+        },
+        {
+            "time": "2025-04-17 15:15:00",
+            "past_15": "Deployed the sync",
+            "next_15": "Watch the sync run..."
+        },
+        {
+            "time": "2025-04-18 16:32:12",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-18 16:32:12",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-18 16:45:00",
+            "past_15": "not whatever was important, quite tired",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-18 16:45:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-18 16:45:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-18 19:01:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-18 19:01:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-18 19:15:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-21 14:15:00",
+            "past_15": "Got going on syncer",
+            "next_15": "Finish the syncer"
+        },
+        {
+            "time": "2025-04-21 15:15:00",
+            "past_15": "making progress on syncer",
+            "next_15": "finish tx sync for the first round"
+        },
+        {
+            "time": "2025-04-21 15:30:00",
+            "past_15": "getting sync to do 100",
+            "next_15": "100 on sync"
+        },
+        {
+            "time": "2025-04-22 14:30:00",
+            "past_15": "Writing an script to do the creations from the excel script.",
+            "next_15": "Finish the excel -> batch file script"
+        },
+        {
+            "time": "2025-04-22 16:00:00",
+            "past_15": "Making a generic XLSX importer for postgress",
+            "next_15": "Making a generic XLSX importer for postgress"
+        },
+        {
+            "time": "2025-04-22 17:15:01",
+            "past_15": "fucking got that import script for xlsx working",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-29 11:00:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-29 11:15:00",
+            "past_15": "Got fifteen working",
+            "next_15": "Putter"
+        },
+        {
+            "time": "2025-04-29 11:30:00",
+            "past_15": "Puttered.",
+            "next_15": "Get focused on the ABSA stuff"
+        },
+        {
+            "time": "2025-04-29 13:30:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-29 14:30:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-04-29 16:00:01",
+            "past_15": "Got MCPs working!",
+            "next_15": "Getting once off debit orders for ABSA out"
+        },
+        {
+            "time": "2025-04-29 16:30:01",
+            "past_15": "Helped Marlene",
+            "next_15": "Get ABSA CSV down"
+        },
+        {
+            "time": "2025-04-29 16:45:01",
+            "past_15": "Almost done with CSV export",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-03 11:30:00",
+            "past_15": "Nothing, 'm unfocused",
+            "next_15": "Focus on getting the sync project open in front of me and getting the transactions into the db."
+        },
+        {
+            "time": "2025-05-03 11:45:00",
+            "past_15": "Feeling quite frustrated and lost with the fucking agent / vibe window.",
+            "next_15": "Dunno, just keep hoping for the best"
+        },
+        {
+            "time": "2025-05-03 12:00:00",
+            "past_15": "Transactions persisting to the DB",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-03 12:15:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-03 12:15:01",
+            "past_15": "Decided to code more manually.",
+            "next_15": "Wire up the full sync with batched pushes to the DW"
+        },
+        {
+            "time": "2025-05-12 11:10:30",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-12 11:15:01",
+            "past_15": "Helped KAren + Marlene",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-12 11:15:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-12 11:30:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-12 11:45:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-12 12:30:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-12 13:15:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-12 13:30:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-12 16:00:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-24 13:43:17",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-24 14:00:01",
+            "past_15": "Working on a debouncer, which is probably overkill",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-24 14:15:01",
+            "past_15": "Started fixing the card.",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-24 17:30:01",
+            "past_15": "Working on both the receipt finder and the SolTrust report",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-24 20:00:01",
+            "past_15": "Working on Delina's report",
+            "next_15": "Working on Delina's report"
+        },
+        {
+            "time": "2025-05-25 17:05:48",
+            "past_15": "Just get Delina's report working. Via CSV if need be.",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-25 17:15:00",
+            "past_15": "Getting distracted",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-25 17:30:00",
+            "past_15": "Getting really fucking bored waiting for this fucking thing",
+            "next_15": "Gonna sit here like a bitch and SHIT ONE FUCKING THING OUT AT A FCUKNING TIME"
+        },
+        {
+            "time": "2025-05-25 22:00:00",
+            "past_15": "Made a lot of progress on the receipt viewer.",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-25 22:15:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-26 11:00:01",
+            "past_15": "Call met Delina",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-26 16:15:00",
+            "past_15": "bos",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-26 16:45:01",
+            "past_15": "Model key everywhere",
+            "next_15": "DL SolTrust Data"
+        },
+        {
+            "time": "2025-05-28 14:15:01",
+            "past_15": "Synced with frenchy\nFixing the two page PDF issue",
+            "next_15": "Search box issue"
+        },
+        {
+            "time": "2025-05-28 14:30:01",
+            "past_15": "Working on the search bug",
+            "next_15": "Working on the search bug"
+        },
+        {
+            "time": "2025-05-28 14:45:00",
+            "past_15": "Sporting out the search bar ticket",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-28 15:15:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-28 17:15:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-29 12:00:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-29 12:15:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-05-29 18:00:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-02 14:01:39",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-02 14:15:01",
+            "past_15": "focused on xero syncing",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-02 15:00:01",
+            "past_15": "still trying to get the Xero sync to run",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-02 15:45:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-02 16:00:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-02 16:15:01",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-04 14:00:00",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-09 11:24:39",
+            "past_15": "Focus on getting started with the day\nGet Eline to be ready by 1230 for a walk",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-17 11:41:46",
+            "past_15": "* taked to Marlene and Gerhard",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-17 11:45:01",
+            "past_15": "* started",
+            "next_15": "* pick a good ticket to get done."
+        },
+        {
+            "time": "2025-06-17 12:00:00",
+            "past_15": "* Got distracted",
+            "next_15": "* Finish the top ticket."
+        },
+        {
+            "time": "2025-06-17 12:15:01",
+            "past_15": "* started working on the slow check ticket\n* started working on the slow",
+            "next_15": "* speed up check\n* get batch read of associations working"
+        },
+        {
+            "time": "2025-06-17 12:30:01",
+            "past_15": "* worked on the slow revert tx thing\n* worked on the batch assoc",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-17 13:00:01",
+            "past_15": "* fixes slow check\n* working on assoc thing, pivoting to pure manual syncing.",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-17 13:45:01",
+            "past_15": "* built a bulk exporter for hubspot to do assocs instead of trying to do assocs.",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-17 14:45:00",
+            "past_15": "* working on assoc sync problem",
+            "next_15": "* finish it."
+        },
+        {
+            "time": "2025-06-20 18:14:19",
+            "past_15": "",
+            "next_15": ""
+        },
+        {
+            "time": "2025-06-20 18:23:44",
+            "past_15": "",
+            "next_15": ""
+        }
+    ]
+}
