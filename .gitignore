@@ -1,0 +1,38 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+/build/
+/build/**/*
+/dist/
+/dist/**/*
+*.manifest
+*.spec
+
+# PyInstaller
+*.exe
+*.manifest
+
+# Logs and data
+*.log
+# productivity_log.json - Committed to repository
+*.backup.*
+
+# Environment
+venv/
+env/
+ENV/
+.env
+.venv
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db 

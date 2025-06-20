@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity Dashboard</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .card {
+      @apply rounded-lg shadow-lg overflow-hidden;
+    }
+    .card-header {
+      @apply p-5 bg-white border-b;
+    }
+    .card-title {
+      @apply text-lg font-semibold;
+    }
+    .card-content {
+      @apply p-5 bg-white;
+    }
+    .tabs-list {
+      @apply flex mb-6 border-b;
+      gap: 6px;
+    }
+    .tabs-trigger {
+      @apply px-8 py-4 font-medium cursor-pointer;
+      border-radius: 8px 8px 0 0;
+      border: 2px solid #e2e8f0;
+      border-bottom: none;
+      background-color: #f8fafc;
+      color: #64748b;
+      position: relative;
+      margin-bottom: -2px;
+      transition: all 0.2s ease;
+    }
+    .tabs-trigger[data-state="active"] {
+      background-color: white;
+      color: #1e40af;
+      font-weight: bold;
+      border-color: #e2e8f0;
+      border-bottom: 2px solid white;
+      z-index: 1;
+    }
+    .tabs-trigger[data-state="inactive"]:hover {
+      background-color: #f1f5f9;
+      color: #2563eb;
+    }
+    .tabs-content {
+      @apply p-6 w-full;
+    }
+    .button {
+      @apply px-3 py-1 rounded text-sm font-medium;
+    }
+    .button-outline {
+      @apply border border-gray-300 hover:bg-gray-50;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-4">
+  <div id="root" class="container mx-auto max-w-6xl"></div>
+
+  <script type="text/babel">
+    // Mock components
+    const Card = ({ className, children }) => (
+      <div className={`card ${className}`}>{children}</div>
+    );
+    
+    const CardHeader = ({ children }) => (
+      <div className="card-header">{children}</div>
+    );
+    
+    const CardTitle = ({ className, children }) => (
+      <div className={`card-title ${className}`}>{children}</div>
+    );
+    
+    const CardContent = ({ children }) => (
+      <div className="card-content">{children}</div>
+    );
+    
+    const Tabs = ({ defaultValue, className, children }) => {
+      const [activeTab, setActiveTab] = React.useState(defaultValue);
+      
+      // Find the TabsList and TabsContent children
+      let tabsList = null;
+      const tabsContents = [];
+      
+      React.Children.forEach(children, child => {
+        if (child && child.type === TabsList) {
+          tabsList = React.cloneElement(child, { activeTab, setActiveTab });
+        } else if (child && child.type === TabsContent) {
+          tabsContents.push(
+            React.cloneElement(child, { 
+              isActive: child.props.value === activeTab 
+            })
+          );
+        }
+      });
+      
+      return (
+        <div className={`${className}`}>
+          {tabsList}
+          <div>
+            {tabsContents}
+          </div>
+        </div>
+      );
+    };
+    
+    const TabsList = ({ className, activeTab, setActiveTab, children }) => (
+      <div className={`tabs-list ${className || ''}`}>
+        {React.Children.map(children, child => 
+          React.cloneElement(child, { 
+            isActive: child.props.value === activeTab,
+            onClick: () => setActiveTab(child.props.value)
+          })
+        )}
+      </div>
+    );
+    
+    const TabsTrigger = ({ value, isActive, onClick, children }) => (
+      <div 
+        className="tabs-trigger" 
+        data-state={isActive ? "active" : "inactive"}
+        onClick={onClick}
+      >
+        {children}
+      </div>
+    );
+    
+    const TabsContent = ({ value, isActive, className, children }) => (
+      isActive ? <div className={`tabs-content ${className || ''}`}>{children}</div> : null
+    );
+    
+    const Button = ({ variant = 'primary', size = 'md', className = '', onClick, children }) => {
+      const baseStyles = "font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
+      
+      const variantStyles = {
+        primary: "bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500",
+        outline: "border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-blue-500",
+        secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-500"
+      };
+      
+      const sizeStyles = {
+        sm: "px-3 py-1.5 text-xs",
+        md: "px-4 py-2 text-sm",
+        lg: "px-5 py-2.5 text-base"
+      };
+      
+      return (
+        <button 
+          className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+          onClick={onClick}
+        >
+          {children}
+        </button>
+      );
+    };
+
+    // Main component
+    const ActivityTimeline = () => {
+      const [selectedDate, setSelectedDate] = React.useState(null);
+      const [importedData, setImportedData] = React.useState(null);
+      const fileInputRef = React.useRef(null);
+      
+      // Empty default structure instead of hardcoded data
+      const emptyData = {
+        "actions": [],
+        "priorities": []
+      };
+      
+      // Use imported data or empty data structure
+      const activityData = importedData || emptyData;
+
+      // Get all hours from 9 to 21
+      const hours = Array.from({ length: 13 }, (_, i) => i + 9);
+      
+      // Calculate maximum activities per hour for scaling
+      const maxActivitiesPerHour = Math.max(
+        1, // Default minimum to avoid division by zero
+        ...Object.values(
+          activityData.actions.flatMap(day => 
+            Object.values(day.hourlyDistribution || {})
+          )
+        )
+      );
+      
+      // Format time to be more readable
+      const formatTime = (timeString) => {
+        if (!timeString) return '';
+        const parts = timeString.split(' ');
+        if (parts.length !== 2) return timeString;
+        return parts[1];
+      };
+
+      // Add new function to handle file import
+      const handleImportClick = () => {
+        fileInputRef.current.click();
+      };
+
+      const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            try {
+              const data = JSON.parse(e.target.result);
+              
+              // Validate the data structure
+              if (!data || typeof data !== 'object') {
+                throw new Error('Invalid data format: Root must be an object');
+              }
+              
+              // Check if required properties exist
+              if (!data.actions || !Array.isArray(data.actions)) {
+                throw new Error('Invalid data format: Missing or invalid "actions" array');
+              }
+              
+              if (!data.priorities || !Array.isArray(data.priorities)) {
+                throw new Error('Invalid data format: Missing or invalid "priorities" array');
+              }
+              
+              // Transform the raw data into the expected format
+              const transformedData = {
+                actions: [],
+                priorities: data.priorities // Keep priorities as is
+              };
+              
+              // Group activities by date
+              const activitiesByDate = {};
+              data.actions.forEach(action => {
+                if (!action.time) return;
+                
+                // Extract date part from the timestamp
+                const date = action.time.split(' ')[0];
+                if (!activitiesByDate[date]) {
+                  activitiesByDate[date] = {
+                    date: date,
+                    totalActivities: 0,
+                    hourlyDistribution: {},
+                    activities: []
+                  };
+                }
+                
+                // Add activity to the date
+                activitiesByDate[date].activities.push(action);
+                activitiesByDate[date].totalActivities++;
+                
+                // Update hourly distribution
+                if (action.time) {
+                  const timeParts = action.time.split(' ')[1].split(':');
+                  const hour = parseInt(timeParts[0], 10);
+                  activitiesByDate[date].hourlyDistribution[hour] = 
+                    (activitiesByDate[date].hourlyDistribution[hour] || 0) + 1;
+                }
+              });
+              
+              // Convert the grouped activities to an array
+              transformedData.actions = Object.values(activitiesByDate)
+                .sort((a, b) => a.date.localeCompare(b.date));
+              
+              // Set the transformed data
+              setImportedData(transformedData);
+              
+              // Reset selected date when importing new data
+              setSelectedDate(null);
+            } catch (error) {
+              alert(`Error importing file: ${error.message}`);
+              console.error('Import error:', error);
+            }
+          };
+          reader.readAsText(file);
+        }
+      };
+
+      // Filter priorities to only include those with content
+      const filteredPriorities = activityData.priorities.filter(priority => 
+        priority.text && priority.text.trim() !== ''
+      );
+
+      return (
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="flex justify-end">
+              <div className="flex items-center gap-2">
+                {activityData.actions.length > 0 && (
+                  <div className="text-sm font-normal">
+                    Total Entries: {activityData.actions.reduce((sum, day) => sum + day.totalActivities, 0)}
+                  </div>
+                )}
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleImportClick}
+                  className="ml-2"
+                >
+                  Import
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => {
+                    // Create sample data matching the productivity_log.json format
+                    const sampleData = {
+                      actions: [
+                        {
+                          time: "2025-04-01 09:15",
+                          past_15: "Started working on project",
+                          next_15: "Continue with feature implementation"
+                        },
+                        {
+                          time: "2025-04-01 10:30",
+                          past_15: "Completed feature implementation",
+                          next_15: "Start testing"
+                        },
+                        {
+                          time: "2025-04-01 11:45",
+                          past_15: "Testing completed",
+                          next_15: "Prepare for deployment"
+                        },
+                        {
+                          time: "2025-04-02 09:00",
+                          past_15: "Started deployment",
+                          next_15: "Monitor launch"
+                        }
+                      ],
+                      priorities: [
+                        {
+                          time: "2025-04-01 09:00",
+                          text: "1. Implement new features\n2. Test thoroughly\n3. Deploy to production"
+                        },
+                        {
+                          time: "2025-04-02 09:00",
+                          text: "1. Monitor launch\n2. Fix bugs\n3. Update documentation"
+                        }
+                      ]
+                    };
+                    
+                    // Create downloadable file
+                    const blob = new Blob([JSON.stringify(sampleData, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'sample_productivity_log.json';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                  }}
+                  className="ml-2"
+                >
+                  Export Sample
+                </Button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept=".json"
+                  style={{ display: 'none' }}
+                />
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {activityData.actions.length === 0 ? (
+              <div className="flex flex-col items-center justify-center p-12 text-center space-y-4">
+                <div className="text-3xl font-bold text-gray-300">No Data Loaded</div>
+                <p className="text-gray-500">Click the Import button to load your activity data, or use Export Sample to see an example of the required format.</p>
+                <Button 
+                  onClick={handleImportClick}
+                  className="mt-4"
+                >
+                  Import Data
+                </Button>
+              </div>
+            ) : (
+              <Tabs defaultValue="activities" className="w-full">
+                <TabsList>
+                  <TabsTrigger value="activities">Activity Timeline</TabsTrigger>
+                  <TabsTrigger value="priorities">Priorities</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="priorities">
+                  <div className="space-y-3">
+                    {filteredPriorities.map((priority, index) => (
+                      <div key={index} className="p-4 border rounded bg-white shadow-sm">
+                        <div className="text-sm text-gray-500 mb-2 font-medium">{priority.time}</div>
+                        <div className="whitespace-pre-line">{priority.text}</div>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="activities">
+                  <div className="relative space-y-6">
+                    <div className="flex border-b mb-2">
+                      <div className="w-24 font-medium">Date</div>
+                      <div className="w-12 font-medium text-center">#</div>
+                      <div className="flex-1 flex">
+                        {hours.map(hour => (
+                          <div key={hour} className="flex-1 text-center text-sm">
+                            {hour}h
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {activityData.actions.map((day, index) => (
+                      <div 
+                        key={index} 
+                        className={`flex items-center py-2 border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${selectedDate === day.date ? 'bg-blue-50' : ''}`}
+                        onClick={() => setSelectedDate(selectedDate === day.date ? null : day.date)}
+                      >
+                        <div className="w-24 font-medium">{day.date.slice(5)}</div>
+                        <div className="w-12 text-center font-medium">{day.totalActivities}</div>
+                        <div className="flex-1 flex">
+                          {hours.map(hour => {
+                            const count = day.hourlyDistribution[hour] || 0;
+                            const opacity = count > 0 ? (count / maxActivitiesPerHour) * 0.9 + 0.1 : 0;
+                            return (
+                              <div key={hour} className="flex-1 px-1">
+                                {count > 0 ? (
+                                  <div 
+                                    className="bg-blue-500 rounded w-full h-8 flex items-center justify-center text-white text-xs font-medium"
+                                    style={{ opacity }}
+                                  >
+                                    {count}
+                                  </div>
+                                ) : (
+                                  <div className="w-full h-8 border border-dashed border-gray-200 rounded"></div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {selectedDate && (
+                    <div className="mt-6">
+                      <h3 className="text-lg font-medium mb-2">Activity Details for {selectedDate}</h3>
+                      <div className="border rounded">
+                        <table className="w-full border-collapse">
+                          <thead className="bg-gray-100">
+                            <tr>
+                              <th className="p-2 text-left">Time</th>
+                              <th className="p-2 text-left">Past 15 Min</th>
+                              <th className="p-2 text-left">Next 15 Min</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {activityData.actions
+                              .find(day => day.date === selectedDate)
+                              .activities.map((activity, actIndex) => (
+                                <tr key={actIndex} className="border-t">
+                                  <td className="p-2 align-top whitespace-nowrap font-medium">{formatTime(activity.time)}</td>
+                                  <td className="p-2 align-top whitespace-pre-line">{activity.past_15 || '—'}</td>
+                                  <td className="p-2 align-top whitespace-pre-line">{activity.next_15 || '—'}</td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {!selectedDate && (
+                    <div className="text-center text-gray-500 p-4 border rounded bg-gray-50">
+                      Click on any date row above to see detailed activities for that day
+                    </div>
+                  )}
+                </TabsContent>
+              </Tabs>
+            )}
+          </CardContent>
+        </Card>
+      );
+    };
+
+    // Render the app
+    ReactDOM.render(<ActivityTimeline />, document.getElementById('root'));
+  </script>
+</body>
+</html>
