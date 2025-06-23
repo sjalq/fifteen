@@ -33,6 +33,8 @@ class ProductivityApp:
         self.last_active = True
         # Store timestamp when popup is shown
         self.current_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # Timer toggle state - load from settings or default to True
+        self.timer_enabled = self.data.get("settings", {}).get("timer_enabled", True)
         
         # Create root window but keep it hidden
         self.root = tk.Tk()
@@ -86,18 +88,31 @@ class ProductivityApp:
         # Create menu items using pystray's default Windows behavior:
         # - Right-click shows menu
         # - Left-click triggers the DEFAULT menu item
-        menu = pystray.Menu(
-            item('Show Popup', self.show_popup_from_menu, default=True),  # Left-click triggers this
-            pystray.Menu.SEPARATOR,
-            item('Quit', self.quit_application)
-        )
+        self.create_menu()
         
         # Create the icon - let pystray handle clicks with default behavior
-        self.icon = pystray.Icon("ProductivityTracker", self.icon_image, "Productivity Tracker", menu)
+        self.icon = pystray.Icon("ProductivityTracker", self.icon_image, "Productivity Tracker", self.menu)
         
         print("Tray icon configured with Windows defaults:")
         print("- Left-click: triggers 'Show Popup' (default item)")
         print("- Right-click: shows menu")
+    
+    def create_menu(self):
+        """Create the context menu with dynamic timer toggle"""
+        timer_text = "Timer: ON" if self.timer_enabled else "Timer: OFF"
+        self.menu = pystray.Menu(
+            item('Show Popup', self.show_popup_from_menu, default=True),  # Left-click triggers this
+            pystray.Menu.SEPARATOR,
+            item(timer_text, self.toggle_timer, checked=lambda item: self.timer_enabled),
+            pystray.Menu.SEPARATOR,
+            item('Quit', self.quit_application)
+        )
+    
+    def update_menu(self):
+        """Update the menu to reflect current timer state"""
+        if hasattr(self, 'icon'):
+            self.create_menu()
+            self.icon.menu = self.menu
         
     def handle_left_click_for_menu(self, icon):
         """Handle left click to show menu programmatically"""
@@ -130,6 +145,24 @@ class ProductivityApp:
         print("MENU ITEM clicked - toggling popup")  # Debug
         # Schedule the popup toggle to be shown from the main thread
         self.root.after(0, self.toggle_popup)
+        
+    def toggle_timer(self, icon=None, item=None):
+        """Toggle the timer on/off"""
+        self.timer_enabled = not self.timer_enabled
+        print(f"Timer toggled: {'ON' if self.timer_enabled else 'OFF'}")
+        
+        # Save the setting
+        self.save_timer_setting()
+        
+        # Update the menu to reflect the new state
+        self.update_menu()
+        
+    def save_timer_setting(self):
+        """Save timer setting to data file"""
+        if "settings" not in self.data:
+            self.data["settings"] = {}
+        self.data["settings"]["timer_enabled"] = self.timer_enabled
+        self.save_data()
         
     def toggle_popup(self):
         """Toggle popup visibility - show if hidden, hide if visible"""
@@ -229,7 +262,10 @@ class ProductivityApp:
         # Default structure with empty lists for priorities and actions
         default_data = {
             "priorities": [],
-            "actions": []
+            "actions": [],
+            "settings": {
+                "timer_enabled": True
+            }
         }
         
         if os.path.exists(self.data_file):
@@ -251,6 +287,12 @@ class ProductivityApp:
                         # This is the old format, migrate it
                         return self.migrate_old_data(data)
                     
+                    # Ensure settings exist even in newer format files
+                    if "settings" not in data:
+                        data["settings"] = {"timer_enabled": True}
+                    elif "timer_enabled" not in data["settings"]:
+                        data["settings"]["timer_enabled"] = True
+                    
                     return data
             except Exception as e:
                 print(f"Error loading data: {e}")
@@ -261,7 +303,10 @@ class ProductivityApp:
         """Migrate data from old format to new format"""
         new_data = {
             "priorities": [],
-            "actions": []
+            "actions": [],
+            "settings": {
+                "timer_enabled": True
+            }
         }
         
         # Process old data if it's a dictionary
@@ -628,7 +673,7 @@ class ProductivityApp:
         self.last_active = True
 
     def schedule_popup(self):
-        """Schedule popups every 15 minutes"""
+        """Schedule popups every 15 minutes when timer is enabled"""
         while self.running:
             now = datetime.now()
             # Calculate minutes until next 15-minute mark
@@ -639,12 +684,16 @@ class ProductivityApp:
             if seconds_to_wait > 0:
                 time.sleep(seconds_to_wait)
             
-            if self.running:
-                # Queue a popup request instead of creating one directly
+            if self.running and self.timer_enabled:
+                # Only queue popup if timer is enabled
+                print("Timer triggered - queuing popup")
                 self.popup_queue.put(True)
                 
                 # Sleep for a short time to avoid creating multiple popups
                 time.sleep(60)  # Wait a minute before checking again
+            elif self.running:
+                # Timer is disabled, just wait a bit and check again
+                time.sleep(30)  # Check every 30 seconds if timer gets re-enabled
 
     def confirm_close(self):
         """Two-step close button process"""
