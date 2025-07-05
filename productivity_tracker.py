@@ -11,6 +11,7 @@ from PIL import Image, ImageDraw, ImageTk
 import pystray
 from pystray import MenuItem as item
 import ctypes
+import requests
 # Comment out problematic imports
 # import win32gui
 # import win32con
@@ -36,6 +37,11 @@ class ProductivityApp:
         # Timer toggle state - load from settings or default to True
         self.timer_enabled = self.data.get("settings", {}).get("timer_enabled", True)
         
+        # Todoist API configuration
+        self.todoist_api_token = "0f3ea04ceb24e895b8bb85b5323347d44d06fd27"
+        self.todoist_sync_interval = 24 * 60 * 60  # 24 hours in seconds
+        self.last_todoist_sync = 0
+        
         # Create root window but keep it hidden
         self.root = tk.Tk()
         self.root.withdraw()  # Hide the root window
@@ -54,6 +60,9 @@ class ProductivityApp:
         
         # Check queue periodically for popup requests
         self.root.after(1000, self.check_popup_queue)
+        
+        # Initial Todoist sync on startup
+        self.sync_todoist_tasks()
         
         # Start the tray icon in a separate thread after a small delay
         def start_tray():
@@ -372,17 +381,117 @@ class ProductivityApp:
         with open(self.data_file, 'w') as f:
             json.dump(self.data, f, indent=4)
 
+    def fetch_todoist_priority_tasks(self):
+        """Fetch priority 1 tasks from Todoist API"""
+        try:
+            headers = {
+                'Authorization': f'Bearer {self.todoist_api_token}',
+                'Content-Type': 'application/json'
+            }
+            
+            response = requests.get('https://api.todoist.com/rest/v2/tasks', headers=headers)
+            response.raise_for_status()
+            
+            tasks = response.json()
+            
+            # Filter for priority 1 tasks (priority 4 in API = Priority 1 in UI)
+            priority_1_tasks = [task for task in tasks if task.get('priority') == 4]
+            
+            # Sort by creation date (most recent first)
+            priority_1_tasks.sort(key=lambda x: x.get('created_at', ''), reverse=True)
+            
+            # Return top 3 tasks
+            return priority_1_tasks[:3]
+            
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching Todoist tasks: {e}")
+            return []
+        except Exception as e:
+            print(f"Unexpected error fetching Todoist tasks: {e}")
+            return []
+
+    def sync_todoist_tasks(self):
+        """Sync Todoist priority 1 tasks to top3 field"""
+        try:
+            tasks = self.fetch_todoist_priority_tasks()
+            
+            if tasks:
+                # Format tasks with "* " bullets
+                formatted_tasks = []
+                for task in tasks:
+                    task_content = task.get('content', 'Untitled Task')
+                    formatted_tasks.append(f"* {task_content}")
+                
+                # Join with newlines
+                todoist_top3 = '\n'.join(formatted_tasks)
+                
+                # Update the current data with Todoist tasks
+                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                
+                # Add to priorities list
+                self.data['priorities'].append({
+                    'time': current_time,
+                    'text': todoist_top3
+                })
+                
+                # Save updated data
+                self.save_data()
+                
+                # Update last sync time
+                self.last_todoist_sync = time.time()
+                
+                print(f"Synced {len(tasks)} Todoist priority 1 tasks")
+                
+                # If popup is open, update the text field
+                if hasattr(self, 'top3_entry') and self.top3_entry.winfo_exists():
+                    self.top3_entry.delete(1.0, tk.END)
+                    self.top3_entry.insert(1.0, todoist_top3)
+                    
+        except Exception as e:
+            print(f"Error syncing Todoist tasks: {e}")
+
+    def should_sync_todoist(self):
+        """Check if it's time to sync Todoist tasks (every 24 hours)"""
+        current_time = time.time()
+        return (current_time - self.last_todoist_sync) >= self.todoist_sync_interval
+
+    def manual_sync_todoist(self):
+        """Manually sync Todoist tasks when button is clicked"""
+        if hasattr(self, 'sync_button') and self.sync_button.winfo_exists():
+            # Change button text to show syncing
+            original_text = self.sync_button.cget('text')
+            self.sync_button.config(text="Syncing...")
+            self.sync_button.update()
+            
+            # Perform the sync
+            self.sync_todoist_tasks()
+            
+            # Update the text field with latest priorities
+            if hasattr(self, 'top3_entry') and self.top3_entry.winfo_exists():
+                latest_top3 = self.get_latest_top3()
+                if latest_top3:
+                    self.top3_entry.delete(1.0, tk.END)
+                    self.top3_entry.insert(1.0, latest_top3)
+            
+            # Reset button text after a short delay
+            self.window.after(1000, lambda: self.sync_button.config(text=original_text) if self.sync_button.winfo_exists() else None)
+
     def check_popup_queue(self):
-        """Check if any popups are requested"""
+        """Check if any popups are requested and periodic Todoist sync"""
         try:
             if not self.popup_queue.empty():
                 self.popup_queue.get(False)
                 self.create_popup()
         except queue.Empty:
             pass
-        finally:
-            if self.running:
-                self.root.after(1000, self.check_popup_queue)
+        
+        # Check if it's time to sync Todoist tasks (every 24 hours)
+        if self.should_sync_todoist():
+            print("24-hour Todoist sync triggered")
+            self.sync_todoist_tasks()
+        
+        if self.running:
+            self.root.after(1000, self.check_popup_queue)
             
     def create_popup(self):
         """Create and display a productivity check popup"""
@@ -499,7 +608,7 @@ class ProductivityApp:
         self.top3_entry = tk.Text(self.window, height=4, width=40, font=("Segoe UI", 11), bg="#ffffff", bd=2, relief="groove")
         self.top3_entry.grid(row=2, column=0, sticky="nsew", padx=10, pady=5)
         
-        # Load the most recent top 3 priorities
+        # Load latest top3 priorities (including Todoist sync if available)
         latest_top3 = self.get_latest_top3()
         if latest_top3:
             self.top3_entry.insert("1.0", latest_top3)
@@ -537,6 +646,36 @@ class ProductivityApp:
         )
         self.submit_button.pack(side=tk.LEFT, padx=5)
         
+        # Play Video button
+        self.play_button = tk.Button(
+            button_frame, 
+            text="Play Video", 
+            command=self.play_video,
+            bg="#2196F3",
+            fg="white",
+            font=("Segoe UI", 11, "bold"),
+            padx=10,
+            pady=5,
+            relief=tk.RAISED,
+            borderwidth=2
+        )
+        self.play_button.pack(side=tk.LEFT, padx=5)
+        
+        # Sync Todoist button
+        self.sync_button = tk.Button(
+            button_frame, 
+            text="Sync Todoist", 
+            command=self.manual_sync_todoist,
+            bg="#FF9800",
+            fg="white",
+            font=("Segoe UI", 11, "bold"),
+            padx=10,
+            pady=5,
+            relief=tk.RAISED,
+            borderwidth=2
+        )
+        self.sync_button.pack(side=tk.LEFT, padx=5)
+        
         # Close button (red with white text)
         self.close_button = tk.Button(
             button_frame, 
@@ -560,6 +699,8 @@ class ProductivityApp:
         self.past_entry.bind("<Tab>", self.focus_next_widget)
         self.next_entry.bind("<Tab>", self.focus_next_widget)
         self.submit_button.bind("<Tab>", self.focus_next_widget)
+        self.play_button.bind("<Tab>", self.focus_next_widget)
+        self.sync_button.bind("<Tab>", self.focus_next_widget)
         self.close_button.bind("<Tab>", self.focus_next_widget)
 
     def focus_next_widget(self, event):
@@ -601,6 +742,20 @@ class ProductivityApp:
         # Hide the window if requested (withdraw completely, don't just minimize)
         if minimize and self.window.winfo_exists():
             self.window.withdraw()  # Hide the window completely
+
+    def play_video(self):
+        """Play the Top 3 things.mp4 file"""
+        video_file = "Top 3 things.mp4"
+        if os.path.exists(video_file):
+            try:
+                # Minimize the app window before playing video
+                if self.window is not None and self.window.winfo_exists():
+                    self.window.iconify()  # Minimize to taskbar
+                os.startfile(video_file)  # Windows default player
+            except Exception as e:
+                messagebox.showerror("Error", f"Could not play video: {e}")
+        else:
+            messagebox.showerror("Error", f"Video file '{video_file}' not found")
 
     def on_closing(self):
         """Handle window closing event"""
