@@ -1,0 +1,42 @@
+[package]
+name = "fifteen-rust"
+version = "1.0.0"
+edition = "2021"
+
+[[bin]]
+name = "productivity_tracker"
+path = "src/main.rs"
+
+[dependencies]
+iced = { version = "0.12", features = ["tokio", "advanced"] }
+tray-icon = "0.13"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = "0.4"
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.12", features = ["json"] }
+windows = { version = "0.54", features = [
+    "Win32_UI_Shell",
+    "Win32_System_LibraryLoader",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_Foundation"
+]}
+image = "0.24"
+
+[build-dependencies]
+embed-resource = "2.4"
+winres = "0.1"
+image = "0.24"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[package.metadata.winres]
+OriginalFilename = "productivity_tracker.exe"
+FileDescription = "Productivity Tracker"
+ProductName = "Productivity Tracker"
+ProductVersion = "1.0.0"

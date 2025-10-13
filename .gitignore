@@ -35,4 +35,24 @@ ENV/
 *.swp
 *.swo
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Rust
+/fifteen-rust/target/
+/test-rust/target/
+**/*.rs.bk
+Cargo.lock
+
+# Build scripts and temporary files
+/fifteen-rust/build.bat
+/fifteen-rust/build.ps1
+/test-rust/
+
+# Visual Studio Build Tools
+*.ilk
+*.pdb
+*.idb
+*.obj
+*.tlog/
+*.vspscc
+*.vssscc 

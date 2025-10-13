@@ -7,11 +7,30 @@ import threading
 import time
 import queue
 import sys
-from PIL import Image, ImageDraw, ImageTk
-import pystray
-from pystray import MenuItem as item
 import ctypes
-import requests
+
+# Lazy load heavy imports
+Image = None
+ImageDraw = None
+ImageTk = None
+pystray = None
+item = None
+requests = None
+
+def load_heavy_imports():
+    """Load heavy imports after GUI is responsive"""
+    global Image, ImageDraw, ImageTk, pystray, item, requests
+    from PIL import Image as _Image, ImageDraw as _ImageDraw, ImageTk as _ImageTk
+    import pystray as _pystray
+    from pystray import MenuItem as _item
+    import requests as _requests
+    
+    Image = _Image
+    ImageDraw = _ImageDraw
+    ImageTk = _ImageTk
+    pystray = _pystray
+    item = _item
+    requests = _requests
 # Comment out problematic imports
 # import win32gui
 # import win32con
@@ -46,10 +65,9 @@ class ProductivityApp:
         self.root = tk.Tk()
         self.root.withdraw()  # Hide the root window
         
-        # Create system tray icon
-        print("Creating tray icon...")  # Debug
-        self.create_tray_icon()
-        print("Tray icon created successfully")  # Debug
+        # Delay tray icon creation to after GUI is responsive
+        self.icon = None
+        self.root.after(100, self.delayed_tray_setup)
         
         # Start the timer in a separate thread
         self.timer_thread = threading.Thread(target=self.schedule_popup)
@@ -61,26 +79,34 @@ class ProductivityApp:
         # Check queue periodically for popup requests
         self.root.after(1000, self.check_popup_queue)
         
-        # Initial Todoist sync on startup
-        self.sync_todoist_tasks()
+        # Delay initial Todoist sync
+        self.root.after(5000, self.sync_todoist_tasks)
         
-        # Start the tray icon in a separate thread after a small delay
-        def start_tray():
-            print("Starting tray icon thread...")  # Debug
-            time.sleep(0.5)  # Small delay to ensure tkinter is ready
-            print("Running tray icon...")  # Debug
-            self.icon.run()
-            print("Tray icon stopped")  # Debug
-            
-        self.tray_thread = threading.Thread(target=start_tray)
-        self.tray_thread.daemon = True
-        self.tray_thread.start()
+        # Pre-create popup window but keep it hidden
+        self.create_popup()
+        self.window.withdraw()
         
         # Start the tkinter main loop on the main thread
         self.root.mainloop()
         
+    def show_existing_popup(self):
+        """Show the existing popup window"""
+        # Update timestamp and time display
+        self.current_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.update_time_label()
+        
+        # Show window
+        self.window.deiconify()
+        self.window.lift()
+        self.window.focus_force()
+        self.top3_entry.focus_set()
+    
     def create_tray_icon(self):
         """Create the system tray icon"""
+        # Ensure heavy imports are loaded
+        if not pystray:
+            return
+            
         # Try to load existing icon, otherwise create a simple one
         try:
             if os.path.exists("icon.ico"):
@@ -105,6 +131,16 @@ class ProductivityApp:
         print("Tray icon configured with Windows defaults:")
         print("- Left-click: triggers 'Show Popup' (default item)")
         print("- Right-click: shows menu")
+        
+        # Start the tray icon in a separate thread
+        def start_tray():
+            print("Starting tray icon thread...")
+            self.icon.run()
+            print("Tray icon stopped")
+            
+        self.tray_thread = threading.Thread(target=start_tray)
+        self.tray_thread.daemon = True
+        self.tray_thread.start()
     
     def create_menu(self):
         """Create the context menu with dynamic timer toggle"""
@@ -411,44 +447,55 @@ class ProductivityApp:
             return []
 
     def sync_todoist_tasks(self):
-        """Sync Todoist priority 1 tasks to top3 field"""
-        try:
-            tasks = self.fetch_todoist_priority_tasks()
-            
-            if tasks:
-                # Format tasks with "* " bullets
-                formatted_tasks = []
-                for task in tasks:
-                    task_content = task.get('content', 'Untitled Task')
-                    formatted_tasks.append(f"* {task_content}")
-                
-                # Join with newlines
-                todoist_top3 = '\n'.join(formatted_tasks)
-                
-                # Update the current data with Todoist tasks
-                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                
-                # Add to priorities list
-                self.data['priorities'].append({
-                    'time': current_time,
-                    'text': todoist_top3
-                })
-                
-                # Save updated data
-                self.save_data()
-                
-                # Update last sync time
-                self.last_todoist_sync = time.time()
-                
-                print(f"Synced {len(tasks)} Todoist priority 1 tasks")
-                
-                # If popup is open, update the text field
-                if hasattr(self, 'top3_entry') and self.top3_entry.winfo_exists():
-                    self.top3_entry.delete(1.0, tk.END)
-                    self.top3_entry.insert(1.0, todoist_top3)
+        """Sync Todoist priority 1 tasks to top3 field (async)"""
+        def sync_in_background():
+            try:
+                # Ensure requests is loaded
+                if not requests:
+                    return
                     
-        except Exception as e:
-            print(f"Error syncing Todoist tasks: {e}")
+                tasks = self.fetch_todoist_priority_tasks()
+                
+                if tasks:
+                    # Format tasks with "* " bullets
+                    formatted_tasks = []
+                    for task in tasks:
+                        task_content = task.get('content', 'Untitled Task')
+                        formatted_tasks.append(f"* {task_content}")
+                    
+                    # Join with newlines
+                    todoist_top3 = '\n'.join(formatted_tasks)
+                    
+                    # Update the current data with Todoist tasks
+                    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    
+                    # Add to priorities list
+                    self.data['priorities'].append({
+                        'time': current_time,
+                        'text': todoist_top3
+                    })
+                    
+                    # Save updated data
+                    self.save_data()
+                    
+                    # Update last sync time
+                    self.last_todoist_sync = time.time()
+                    
+                    print(f"Synced {len(tasks)} Todoist priority 1 tasks")
+                    
+                    # Update UI from main thread
+                    self.root.after(0, lambda: self._update_top3_ui(todoist_top3))
+                        
+            except Exception as e:
+                print(f"Error syncing Todoist tasks: {e}")
+        
+        threading.Thread(target=sync_in_background, daemon=True).start()
+    
+    def _update_top3_ui(self, todoist_top3):
+        """Update top3 UI from main thread"""
+        if hasattr(self, 'top3_entry') and self.top3_entry.winfo_exists():
+            self.top3_entry.delete(1.0, tk.END)
+            self.top3_entry.insert(1.0, todoist_top3)
 
     def should_sync_todoist(self):
         """Check if it's time to sync Todoist tasks (every 24 hours)"""
@@ -493,12 +540,22 @@ class ProductivityApp:
         if self.running:
             self.root.after(1000, self.check_popup_queue)
             
+    def delayed_tray_setup(self):
+        """Setup tray icon after main GUI is ready"""
+        def setup_in_background():
+            load_heavy_imports()
+            self.root.after(0, self.create_tray_icon)
+            
+        threading.Thread(target=setup_in_background, daemon=True).start()
+    
     def create_popup(self):
         """Create and display a productivity check popup"""
         print("create_popup called")  # Debug print
-        # If a window already exists, destroy it to create a fresh one
-        if self.window is not None and self.window.winfo_exists():
-            self.window.destroy()
+        
+        # If window already exists, just show it
+        if hasattr(self, 'window') and self.window is not None and self.window.winfo_exists():
+            self.show_existing_popup()
+            return
             
         # Update timestamp when popup is created
         self.current_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
